@@ -1,8 +1,20 @@
 from time import sleep
 
-def timer():
-    minutes = 0
-    seconds = 10
+def getUserInput(option):
+    try:
+        result = int(input(f"{option}:\t"))
+        upperBoundCheck = result > 60 if option == "Minutes" else result >= 60
+        lowerBoundCheck = result < 0
+        if (upperBoundCheck or lowerBoundCheck):
+            throw(ValueError)
+    except:
+        print("Please insert a valid numeric value [0-60].")
+        return getUserInput(option)
+    return result
+
+def timer(mins, secs):
+    minutes = int (mins)
+    seconds = int (secs)
 
     while ((minutes >= 0 and seconds >= 0)):
 
@@ -21,11 +33,12 @@ def whatnow():
         return whatnow()
     return True if answer == "y" else False
 
-
 def main():
     running = True
     while (running):
-        timer()
+        minutes, seconds = getUserInput("Minutes"), getUserInput("Seconds")
+        print("\n\tTimer is Starting...\n")
+        timer(minutes, seconds)
         running = whatnow()
 
 if __name__ == "__main__":
